@@ -1,0 +1,3 @@
+group_id,subject_id,sample_id,sample_type,sequence_type,filetype,filepath
+colo_mini,colo_mini,COLO829T,tumor,dna,bam,gs://oa_platform_709/colo_mini_bam/COLO829T.bam
+colo_mini,colo_mini,COLO829R,normal,dna,bam,gs://oa_platform_709/colo_mini_bam/COLO829R.bam
