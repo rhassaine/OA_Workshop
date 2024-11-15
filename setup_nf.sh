@@ -117,13 +117,11 @@ nextflow self-update
 echo "Cloning nf-core/oncoanalyser repository using Nextflow commands..."
 nextflow pull nf-core/oncoanalyser
 
-# List installed pipelines to confirm success
-# Check if nf-core/oncoanalyser is in the list
-
-if echo "$nextflow_list_output" | grep -q "nf-core/oncoanalyser"; then
-  echo "nf-core/oncoanalyser is present in the list of Nextflow pipelines."
+# Verify that the pipeline was pulled successfully
+if [ -d "$HOME/.nextflow/assets/nf-core/oncoanalyser" ]; then
+  echo "nf-core/oncoanalyser pipeline is successfully pulled and available."
 else
-  echo "Error: nf-core/oncoanalyser is not present in the list of Nextflow pipelines."
+  echo "Error: nf-core/oncoanalyser pipeline directory not found. Please check the pull command."
   exit 1
 fi
 
