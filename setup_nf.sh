@@ -102,6 +102,10 @@ if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc; then
   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 fi
 
+echo "Reloading .bashrc in tmux session for above changes to take effect..."
+source ~/.bashrc
+echo "Current PATH: $PATH"
+
 # Confirm the Nextflow installation
 nextflow info
 
