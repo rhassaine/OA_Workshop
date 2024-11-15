@@ -31,12 +31,12 @@ exec > >(tee -i "$LOGFILE" "$STDOUT_LOG") 2> >(tee -i "$LOGFILE" "$STDERR_LOG" >
 
 set -e  # Exit on any error
 
-# Trap errors, log, and send email notification on error
-trap 'echo "Error occurred on line $LINENO. Check $LOGFILE, $STDOUT_LOG, and $STDERR_LOG for details." && send_email && exit 1' ERR
+# Trap errors and log them with line numbers
+trap 'echo "Error occurred on line $LINENO. Check $LOGFILE, $STDOUT_LOG, and $STDERR_LOG for details." && exit 1' ERR
 
 # Installing unzip (necessary for the installation of SDKMAN among other things)
-sudo apt-get update && sudo apt-get install -y unzip
-echo "Checking if unzip is installed..."
+sudo apt-get update && sudo apt-get install -y unzip zip
+echo "Checking if unzip & unzip are installed..."
 
 echo "Checking if Java is installed..."
 
