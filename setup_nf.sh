@@ -12,10 +12,6 @@ STDERR_LOG="oncoanalyser_setup.err"    # Log for stderr only
 echo "Starting Oncoanalyser setup script..."
 echo "Logs will be saved to $LOGFILE, $STDOUT_LOG, and $STDERR_LOG."
 
-# Installing unzip (necessary for the installation of SDKMAN among other things)
-sudo apt-get update && sudo apt-get install -y unzip
-echo "Checking if unzip is installed..."
-
 # Check and install tmux if not installed
 if ! command -v tmux >/dev/null; then
   echo "tmux not found. Installing tmux..."
@@ -37,6 +33,10 @@ set -e  # Exit on any error
 
 # Trap errors, log, and send email notification on error
 trap 'echo "Error occurred on line $LINENO. Check $LOGFILE, $STDOUT_LOG, and $STDERR_LOG for details." && send_email && exit 1' ERR
+
+# Installing unzip (necessary for the installation of SDKMAN among other things)
+sudo apt-get update && sudo apt-get install -y unzip
+echo "Checking if unzip is installed..."
 
 echo "Checking if Java is installed..."
 
