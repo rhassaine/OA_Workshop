@@ -129,6 +129,8 @@ fi
 # Prepare reference data
 # There is a dedicated command in oncoanalyser to download the reference data
 
+# Uncomment the following lines to download the stage data
+
 # echo "Preparing reference data..."
 # nextflow run nf-core/oncoanalyser \
 #   -profile docker \
@@ -155,7 +157,7 @@ fi
 # The following Nextflow commands can be used for running the test profile
 
 # echo "Running test profile for nf-core/oncoanalyser..."
-# nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results
+nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results -c nextflow.config
 
 echo "Setup completed successfully."
 
