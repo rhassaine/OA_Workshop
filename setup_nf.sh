@@ -132,6 +132,7 @@ fi
 # Uncomment the following lines to download the stage data
 
 # echo "Preparing reference data..."
+
 # nextflow run nf-core/oncoanalyser \
 #   -profile docker \
 #   --mode wgts \
@@ -139,6 +140,17 @@ fi
 #   --prepare_reference_only \
 #   --input samplesheet.csv \
 #   --outdir prepare_reference/
+
+# OR 
+
+# nextflow run nf-core/oncoanalyser \
+#   --prepare_reference_only \
+#   -c nextflow.config
+
+# Pointing towards the nextflow.config file will contain all the necessary predefined parameters needed for stating the references
+# for a DNA analysis
+
+# The config file will then need to be adjusted with the correct paths to the references
 
 # This will download the reference data for a run using the GRCh37_hmf reference genome
 # The samplesheet.csv file is a file that contains the information about the samples 
@@ -157,7 +169,7 @@ fi
 # The following Nextflow commands can be used for running the test profile
 
 # echo "Running test profile for nf-core/oncoanalyser..."
-nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results -c nextflow.config
+# nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results -c nextflow.config
 
 echo "Setup completed successfully."
 
