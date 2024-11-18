@@ -82,6 +82,20 @@ else
   echo "Docker is already installed: $(docker --version)"
 fi
 
+# For the user to be able to interact w/ the Docker daemon w/o sudo
+# it needs to be granted permission to the docker group
+
+USER=$(whoami)
+
+echo "Adding user '$USER' to the docker group..."
+sudo usermod -aG docker "$USER"
+
+# Apply group membership changes immediately within the tmux session
+echo "Applying group membership changes for user '$USER'..."
+exec sg docker newgrp "$(id -gn)" <<EONG
+echo "Group membership applied. Verifying groups in this shell:"
+groups
+EONG
 
 # Install Nextflow
 echo "Installing Nextflow..."
