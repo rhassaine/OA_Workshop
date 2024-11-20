@@ -45,26 +45,47 @@ if java_version=$(java --version 2>/dev/null); then
   echo "Java is installed: $java_version"
 else
   echo "Java is not installed. Installing Java with SDKMAN!"
-  curl -s https://get.sdkman.io | bash
-  source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in current shell
-  sdk install java 17.0.10-tem
   
-  # CHANGED: Re-source SDKMAN to ensure java is available
-  source "$HOME/.sdkman/bin/sdkman-init.sh"  
+  # Install SDKMAN
+  curl -s https://get.sdkman.io | bash
+  
+  # Verify SDKMAN installation
+  if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    echo "SDKMAN installed successfully. Initializing..."
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+  else
+    echo "Error: SDKMAN initialization script not found! Exiting."
+    exit 1
+  fi
+  
+  # Install Java via SDKMAN
+  sdk install java 17.0.10-tem || { echo "Error: Failed to install Java. Exiting."; exit 1; }
+  
+  # Explicitly update PATH for Java
+  export PATH="$HOME/.sdkman/candidates/java/current/bin:$PATH"
 fi
 
-# Confirm the Java installation
-java -version
+# Verify Java installation
+if java_version=$(java --version 2>/dev/null); then
+  echo "Java installation successful: $java_version"
+else
+  echo "Error: Java not found after installation. Exiting."
+  exit 1
+fi
 
 # Check and install Docker if not installed
 echo "Checking if Docker is installed..."
 if ! command -v docker >/dev/null; then
   echo "Docker not found. Installing Docker..."
-  
-  # CHANGED: Updated method to add Docker GPG key and repository
+  sudo apt-get update
+  sudo apt-get install -y \
+      ca-certificates \
+      curl \
+      gnupg \
+      lsb-release
+
   sudo mkdir -p /etc/apt/keyrings
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.gpg > /dev/null
-  sudo chmod a+r /etc/apt/keyrings/docker.gpg
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -109,6 +130,7 @@ mv nextflow ~/.local/bin
 
 # Add Nextflow directory to PATH
 export PATH="$HOME/.local/bin:$PATH"
+
 
 # Persist PATH change for future sessions
 if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc; then
