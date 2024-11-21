@@ -111,7 +111,6 @@ mv nextflow ~/.local/bin
 # Add Nextflow directory to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-
 # Persist PATH change for future sessions
 if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' ~/.bashrc; then
   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
