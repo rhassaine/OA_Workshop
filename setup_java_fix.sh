@@ -25,14 +25,14 @@ trap 'echo "Error occurred on line $LINENO. Check $LOGFILE, $STDOUT_LOG, and $ST
 # Step 0: Check and install tmux if not installed
 if ! command -v tmux >/dev/null 2>&1; then
   echo "tmux not found. Installing tmux..."
-  sudo apt-get update && sudo apt-get install -y tmux
+  sudo apt-get update -y && sudo apt-get install -y tmux
 fi
 
 # Step 1: Install Docker outside of tmux
 echo "Installing Docker from the official Docker repository..."
 
 # Update the package index and install prerequisites
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y \
     ca-certificates \
     curl \
@@ -49,7 +49,7 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Update the package index again and install Docker packages
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Verify Docker installation
@@ -94,7 +94,8 @@ if [ "$1" == "--tmux-continue" ]; then
     echo "Java is not installed. Installing Java with SDKMAN!"
     curl -s https://get.sdkman.io | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in the current shell
-    sdk install java 17.0.10-tem
+    echo "Installing Java..."
+    yes | sdk install java 17.0.10-tem
   fi
 
   ### Install Nextflow
@@ -136,15 +137,6 @@ if [ "$1" == "--tmux-continue" ]; then
   #   --prepare_reference_only \
   #   --input samplesheet.csv \
   #   --outdir prepare_reference/
-
-  # OR 
-
-  # nextflow run nf-core/oncoanalyser \
-  #   --prepare_reference_only \
-  #   -c nextflow.config
-
-  # The samplesheet.csv file contains information about the samples and should
-  # be stored in the same directory as this script.
 
   echo "Setup completed successfully inside tmux session '$TMUX_SESSION_NAME'."
 
