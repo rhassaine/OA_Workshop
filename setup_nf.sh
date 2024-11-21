@@ -46,8 +46,9 @@ if java_version=$(java --version); then
 else
   echo "Java is not installed. Installing Java with SDKMAN!"
   curl -s https://get.sdkman.io | bash
-  source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in current shell
-  sdk install java 17.0.10-tem
+  source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in the current shell
+  echo "Installing Java..."
+  yes | sdk install java 17.0.10-tem
 fi
 
 # Confirm the Java installation
@@ -64,14 +65,17 @@ if ! command -v docker >/dev/null; then
       gnupg \
       lsb-release
 
-  sudo mkdir -p /etc/apt/keyrings
+  # Add Docker’s official GPG key for verifying downloads
+  sudo mkdir -m 0755 -p /etc/apt/keyrings
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
+  # Set up the stable Docker repository
   echo \
     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  sudo apt-get update
+    
+  # Update the package index again and install Docker packages
+  sudo apt-get update -y
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
   sudo systemctl start docker
@@ -102,7 +106,7 @@ echo "Installing Nextflow..."
 curl -s https://get.nextflow.io | bash
 
 # Give the permissions to the executable
-chmod +x nextflow
+chmod +rx nextflow
 
 # Recommended directory for the executable
 mkdir -p ~/.local/bin
