@@ -22,6 +22,12 @@ exec > >(tee -i "$LOGFILE" "$STDOUT_LOG") 2> >(tee -i "$LOGFILE" "$STDERR_LOG" >
 set -e  # Exit on any error
 trap 'echo "Error occurred on line $LINENO. Check $LOGFILE, $STDOUT_LOG, and $STDERR_LOG for details." && exit 1' ERR
 
+# Step 0: Check and install tmux if not installed
+if ! command -v tmux >/dev/null 2>&1; then
+  echo "tmux not found. Installing tmux..."
+  sudo apt-get update && sudo apt-get install -y tmux
+fi
+
 # Step 1: Check if the script is already running in a tmux session
 if [ -z "$TMUX" ]; then
   echo "Not in a tmux session. Starting a new tmux session named '$TMUX_SESSION_NAME'..."
@@ -109,6 +115,14 @@ if [ "$1" == "--tmux-continue" ]; then
     curl -s https://get.sdkman.io | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in the current shell
     sdk install java 17.0.10-tem
+
+    # Verify Java installation
+    if java_version=$(java --version); then
+      echo "Java was successfully installed!: $java_version"
+    else
+      echo "Java installation failed."
+      exit 1
+    fi
   fi
 
   ### Install Nextflow
@@ -170,7 +184,7 @@ if [ "$1" == "--tmux-continue" ]; then
   # The samplesheet file is a CSV file with the following columns: 
   # group_id,subject_id,sample_id,sample_type,sequence_type,filetype,filepath
   # In this workshop, it will only be done for the COLOMini sample, from bam
-  # The samplesheet should be stored in the same directory as that this script
+  # The samplesheet should be stored in the same directory as this script
 
   # Extra: Running the test profile
 
@@ -181,6 +195,10 @@ if [ "$1" == "--tmux-continue" ]; then
   # The following Nextflow commands can be used for running the test profile
   # echo "Running test profile for nf-core/oncoanalyser..."
   # nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results -c nextflow.config
+  
+  echo "Setup completed successfully."
 
-  echo "Setup completed successfully inside tmux session '$TMUX_SESSION_NAME'."
+  # Final message
+  echo "Oncoanalyser setup script completed successfully."
+  echo "Please check the log files ($LOGFILE, $STDOUT_LOG, $STDERR_LOG) for details."
 fi
