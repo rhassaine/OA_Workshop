@@ -51,6 +51,8 @@ else
   yes | sdk install java 17.0.10-tem
 fi
 
+export PATH="$HOME/.sdkman/candidates/java/current/bin:$PATH"
+
 # Confirm the Java installation
 java -version
 
