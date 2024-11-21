@@ -28,81 +28,61 @@ if ! command -v tmux >/dev/null 2>&1; then
   sudo apt-get update && sudo apt-get install -y tmux
 fi
 
-# Step 1: Check if the script is already running in a tmux session
-if [ -z "$TMUX" ]; then
-  echo "Not in a tmux session. Starting a new tmux session named '$TMUX_SESSION_NAME'..."
+# Step 1: Install Docker outside of tmux
+echo "Installing Docker from the official Docker repository..."
 
-  # Check if a tmux session with the same name already exists and kill it if it does
-  if tmux has-session -t "$TMUX_SESSION_NAME" 2>/dev/null; then
-    echo "A tmux session named '$TMUX_SESSION_NAME' already exists. Killing it..."
-    tmux kill-session -t "$TMUX_SESSION_NAME"
-  fi
+# Update the package index and install prerequisites
+sudo apt-get update
+sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
 
-  # Start a new tmux session and rerun this script from the beginning
-  tmux new-session -d -s "$TMUX_SESSION_NAME" "bash $0 --tmux-start"
-  echo "A new tmux session has been started. Attach using: tmux attach-session -t $TMUX_SESSION_NAME"
-  exit 0
+# Add Docker’s official GPG key for verifying downloads
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# Set up the stable Docker repository
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Update the package index again and install Docker packages
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Verify Docker installation
+if command -v docker >/dev/null; then
+  echo "Docker installed successfully: $(docker --version)"
+else
+  echo "Docker installation failed. Exiting."
+  exit 1
 fi
 
-# Step 2: Handle the first tmux session logic (initial setup)
-if [ "$1" == "--tmux-start" ]; then
-  echo "Running initial setup inside tmux session '$TMUX_SESSION_NAME'..."
+# Add the current user to the Docker group to allow running Docker without sudo
+USER=$(whoami)
+echo "Adding user '$USER' to the 'docker' group..."
+sudo usermod -aG docker "$USER"
+echo "Docker installation complete. Please log out and log back in to apply group changes, or use 'newgrp docker' to apply them temporarily."
 
-  # Installing unzip and zip packages (required for extracting SDKMAN installation files)
-  echo "Installing unzip and zip..."
-  sudo apt-get update && sudo apt-get install -y unzip zip
-
-  ### Installing Docker using the official Docker instructions
-  echo "Installing Docker from the official Docker repository..."
-
-  # Update the package index and install prerequisites
-  sudo apt-get install -y \
-      ca-certificates \
-      curl \
-      gnupg \
-      lsb-release
-
-  # Add Docker’s official GPG key for verifying downloads
-  sudo mkdir -m 0755 -p /etc/apt/keyrings
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-  # Set up the stable Docker repository
-  echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  # Update the package index again and install Docker packages
-  sudo apt-get update
-  sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-  # Verify Docker installation
-  if command -v docker >/dev/null; then
-    echo "Docker installed successfully: $(docker --version)"
-  else
-    echo "Docker installation failed. Exiting."
-    exit 1
-  fi
-
-  # Add the current user to the Docker group to allow running Docker without sudo
-  USER=$(whoami)
-  echo "Adding user '$USER' to the 'docker' group..."
-  sudo usermod -aG docker "$USER"
-  echo "Docker installation complete. Please log out and log back in to apply group changes, or use 'newgrp docker' to apply them temporarily."
-
-  ### Start a new tmux session for post-Docker setup
-  echo "Starting a new tmux session for post-Docker setup..."
-
-  # Detach and kill the current tmux session
-  tmux detach
+# Step 2: Start a tmux session for the rest of the setup
+if tmux has-session -t "$TMUX_SESSION_NAME" 2>/dev/null; then
+  echo "A tmux session named '$TMUX_SESSION_NAME' already exists. Killing it..."
   tmux kill-session -t "$TMUX_SESSION_NAME"
-
-  # Start a new tmux session for the next stage
-  tmux new-session -d -s "$TMUX_SESSION_NAME" "bash $0 --tmux-continue"
-  echo "A new tmux session has been started for the next stage. Attach using: tmux attach-session -t $TMUX_SESSION_NAME"
-  exit 0
 fi
 
-# Step 3: Handle the second tmux session logic (post-Docker setup)
+echo "Starting a new tmux session for the rest of the setup..."
+tmux new-session -d -s "$TMUX_SESSION_NAME" "bash $0 --tmux-continue"
+if [ $? -ne 0 ]; then
+  echo "Error: Failed to create the tmux session. Exiting."
+  exit 1
+fi
+
+echo "A new tmux session has been started. Attach using: tmux attach-session -t $TMUX_SESSION_NAME"
+exit 0
+
+# Step 3: Handle the setup logic inside tmux
 if [ "$1" == "--tmux-continue" ]; then
   echo "Continuing setup inside tmux session '$TMUX_SESSION_NAME'..."
 
@@ -115,14 +95,6 @@ if [ "$1" == "--tmux-continue" ]; then
     curl -s https://get.sdkman.io | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"  # Initialize SDKMAN in the current shell
     sdk install java 17.0.10-tem
-
-    # Verify Java installation
-    if java_version=$(java --version); then
-      echo "Java was successfully installed!: $java_version"
-    else
-      echo "Java installation failed."
-      exit 1
-    fi
   fi
 
   ### Install Nextflow
@@ -155,9 +127,7 @@ if [ "$1" == "--tmux-continue" ]; then
   fi
 
   ### Prepare reference data
-  # There is a dedicated command in oncoanalyser to download the reference data
-
-  # Uncomment the following lines to download the stage data
+  # Uncomment the following lines to download the reference data
   # echo "Preparing reference data..."
   # nextflow run nf-core/oncoanalyser \
   #   -profile docker \
@@ -173,30 +143,10 @@ if [ "$1" == "--tmux-continue" ]; then
   #   --prepare_reference_only \
   #   -c nextflow.config
 
-  # Pointing towards the nextflow.config file will contain all the necessary predefined parameters needed for stating the references
-  # for a DNA analysis
+  # The samplesheet.csv file contains information about the samples and should
+  # be stored in the same directory as this script.
 
-  # The config file will then need to be adjusted with the correct paths to the references
-
-  # This will download the reference data for a run using the GRCh37_hmf reference genome
-  # The samplesheet.csv file is a file that contains the information about the samples 
-  # that will be used in the analysis - only the references needed for that type of analysis will be downloaded
-  # The samplesheet file is a CSV file with the following columns: 
-  # group_id,subject_id,sample_id,sample_type,sequence_type,filetype,filepath
-  # In this workshop, it will only be done for the COLOMini sample, from bam
-  # The samplesheet should be stored in the same directory as this script
-
-  # Extra: Running the test profile
-
-  # Using the staged references will require the creation of a nextflow.config file
-  # to point each individual reference (otherwise the pipeline 
-  # will download the references again)
-
-  # The following Nextflow commands can be used for running the test profile
-  # echo "Running test profile for nf-core/oncoanalyser..."
-  # nextflow run nf-core/oncoanalyser -profile test,docker --outdir test_profile_results -c nextflow.config
-  
-  echo "Setup completed successfully."
+  echo "Setup completed successfully inside tmux session '$TMUX_SESSION_NAME'."
 
   # Final message
   echo "Oncoanalyser setup script completed successfully."
