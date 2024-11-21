@@ -19,11 +19,11 @@ if ! command -v tmux >/dev/null; then
 fi
 
 # Start in tmux if not already in a tmux session
-# if [ -z "$TMUX" ]; then
-#   tmux new-session -d -s oncoanalyser_setup "bash $0"  # Start a detached tmux session to re-run this script within tmux
-#   echo "Script is now running in tmux session 'oncoanalyser_setup'."
-#   exit
-# fi
+if [ -z "$TMUX" ]; then
+  tmux new-session -d -s oncoanalyser_setup "bash $0"  # Start a detached tmux session to re-run this script within tmux
+  echo "Script is now running in tmux session 'oncoanalyser_setup'."
+  exit
+fi
 
 # Redirect output: `stdout` to STDOUT_LOG and `stderr` to STDERR_LOG,
 # while also capturing both in LOGFILE
