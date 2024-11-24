@@ -17,15 +17,18 @@ nextflow.enable.dsl=2
 // Process definition
 
 process sayHello {
+    container 'ubuntu:latest'
+    publishDir "${params.outdir}/hello", mode: 'copy'
 
     // Input & Output Definitions
     // Any Parameters (if needed, tags for samples, variables, etc)
 
-    //input: none needed in this case, defined the command directly//
+    // input: none needed in this case, defined the command directly
 
     output: 
+    stdout
+    path 'hello.txt', emit: helloFile
     
-    path 'hello.txt', emit: helloChannel
     // Output is stdout, so no need to define it
 
     // Below is the script block where any programming languages & set of instructions can be used
@@ -35,7 +38,8 @@ process sayHello {
 
     script:
     """
-    echo 'Hello Romania!' > hello.txt
+    echo 'Hello World!' > hello.txt
+    cat hello.txt
     """
 
 }
@@ -43,8 +47,11 @@ process sayHello {
 // Let's define a 2nd process that will convert a string to uppercase
 
 process toUpperCase {
+    container 'ubuntu:latest'
+    publishDir "${params.outdir}/uppercase", mode: 'copy'
+
     input:
-    path message
+    path inputFile
 
     output:
     path 'uppercase.txt', emit: uppercaseFile
@@ -52,29 +59,24 @@ process toUpperCase {
 
     script:
     """
-    cat $message | tr '[a-z]' '[A-Z]' | tee uppercase.txt
+    cat ${inputFile} | tr '[a-z]' '[A-Z]' | tee uppercase.txt
     """
-
 }
 
 // Process is defined, moving on to the workflow!
 
 // Workflow definition
 
-// workflow my_first_workflow {
-workflow{
-    
-    // Process(es) & channel(s) are defined here
-
+// workflow my_first_workflow
+workflow {
     // Process 1
     sayHello()
-    
-    // Process 2 
-    toUpperCase(sayHello.out.helloChannel)
 
-    // More processes can be defined here, as needed
+    // Process 2
+    toUpperCase(sayHello.out.helloFile)
 
-    // Use the .view() method to view the results in the console
-    toUpperCase.out.uppercaseFile.view { "File content: ${it.text}" }
-    toUpperCase.out.uppercaseStdout.view { "Stdout content: $it" }
+    // View the outputs
+    sayHello.out.helloFile.view { "File content: ${it.text}" }
+    // toUpperCase.out.uppercaseFile.view { "Uppercase file content: ${it.text}" }
+    toUpperCase.out.uppercaseStdout.view { "Uppercase stdout content: $it" }
 }
