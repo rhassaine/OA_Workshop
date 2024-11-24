@@ -28,8 +28,6 @@ process sayHello {
     output: 
     stdout
     path 'hello.txt', emit: helloFile
-    
-    // Output is stdout, so no need to define it
 
     // Below is the script block where any programming languages & set of instructions can be used
     // That's the beauty of Nextflow!
