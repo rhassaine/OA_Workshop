@@ -3,4 +3,5 @@ oncoanalyser_setup.*
 OA_Output
 .nextflow
 .nextflow.log*
-work
+workDir
+output
