@@ -1,0 +1,52 @@
+debuggroup summary 0.19s welcome to circos v0.69-8 15 Jun 2019 on Perl 5.032001
+debuggroup summary 0.19s current working directory /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e
+debuggroup summary 0.19s command /usr/local/bin/circos -nosvg -conf /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.circos.conf -outputdir /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot -outputfile COLO829v003T_AHHKYHDSXX_S13.circos.png
+debuggroup summary 0.19s loading configuration from file /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.circos.conf
+debuggroup summary 0.19s found conf file /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.circos.conf
+debuggroup summary 0.31s debug will appear for these features: output,summary
+debuggroup summary 0.31s bitmap output image /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot/COLO829v003T_AHHKYHDSXX_S13.circos.png
+debuggroup summary 0.31s parsing karyotype and organizing ideograms
+debuggroup summary 0.39s karyotype has 24 chromosomes of total size 3,095,677,436
+debuggroup summary 0.39s applying global and local scaling
+debuggroup summary 0.40s allocating image, colors and brushes
+debuggroup summary 5.86s drawing 24 ideograms of total size 3,095,677,436
+debuggroup summary 5.86s drawing highlights and ideograms
+debuggroup summary 5.86s found conf file /usr/local/bin/../etc/tracks/highlight.bg.conf
+debuggroup summary 5.87s process track_0 highlight /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/gaps.txt
+debuggroup summary 5.94s found conf file /usr/local/bin/../etc/tracks/link.conf
+debuggroup summary 5.94s process track_0 link /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.link.circos
+debuggroup summary 5.95s drawing link track_0 z 0
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/heatmap.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/histogram.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/histogram.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/histogram.conf
+debuggroup summary 6.04s found conf file /usr/local/bin/../etc/tracks/histogram.conf
+debuggroup summary 6.04s processing track_0 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.snp.circos
+debuggroup summary 8.70s processing track_1 heatmap /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.indel.circos
+debuggroup summary 8.81s processing track_2 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.cnv.circos
+debuggroup summary 8.96s processing track_3 histogram /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.cnv.circos
+debuggroup summary 9.03s processing track_4 histogram /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.cnv.circos
+debuggroup summary 9.12s processing track_5 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.map.circos
+debuggroup summary 9.26s processing track_6 histogram /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.map.circos
+debuggroup summary 9.34s processing track_7 histogram /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.map.circos
+debuggroup summary 9.42s drawing track_0 scatter z 0 COLO829v003T_AHHKYHDSXX_S13.snp.circos orient out
+debuggroup summary 9.89s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 13.43s drawing track_1 heatmap z 0 COLO829v003T_AHHKYHDSXX_S13.indel.circos 
+debuggroup summary 13.45s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 13.77s drawing track_2 scatter z 0 COLO829v003T_AHHKYHDSXX_S13.cnv.circos orient out
+debuggroup summary 13.77s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 13.78s drawing track_3 histogram z 0 COLO829v003T_AHHKYHDSXX_S13.cnv.circos orient out
+debuggroup summary 13.78s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 14.06s drawing track_4 histogram z 0 COLO829v003T_AHHKYHDSXX_S13.cnv.circos orient out
+debuggroup summary 14.06s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 14.27s drawing track_5 scatter z 0 COLO829v003T_AHHKYHDSXX_S13.map.circos orient out
+debuggroup summary 14.27s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 14.27s drawing track_6 histogram z 0 COLO829v003T_AHHKYHDSXX_S13.map.circos orient out
+debuggroup summary 14.28s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 14.50s drawing track_7 histogram z 0 COLO829v003T_AHHKYHDSXX_S13.map.circos orient out
+debuggroup summary 14.51s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup output 14.72s generating output
+debuggroup output 15.20s created PNG image /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot/COLO829v003T_AHHKYHDSXX_S13.circos.png (1186 kb)

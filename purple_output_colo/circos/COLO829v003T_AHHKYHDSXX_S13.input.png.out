@@ -1,0 +1,29 @@
+debuggroup summary 0.18s welcome to circos v0.69-8 15 Jun 2019 on Perl 5.032001
+debuggroup summary 0.19s current working directory /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e
+debuggroup summary 0.19s command /usr/local/bin/circos -nosvg -conf /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.input.conf -outputdir /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot -outputfile COLO829v003T_AHHKYHDSXX_S13.input.png
+debuggroup summary 0.19s loading configuration from file /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.input.conf
+debuggroup summary 0.19s found conf file /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.input.conf
+debuggroup summary 0.31s debug will appear for these features: output,summary
+debuggroup summary 0.31s bitmap output image /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot/COLO829v003T_AHHKYHDSXX_S13.input.png
+debuggroup summary 0.31s parsing karyotype and organizing ideograms
+debuggroup summary 0.39s karyotype has 24 chromosomes of total size 3,095,677,436
+debuggroup summary 0.39s applying global and local scaling
+debuggroup summary 0.40s allocating image, colors and brushes
+debuggroup summary 5.90s drawing 24 ideograms of total size 3,095,677,436
+debuggroup summary 5.90s drawing highlights and ideograms
+debuggroup summary 5.90s found conf file /usr/local/bin/../etc/tracks/highlight.bg.conf
+debuggroup summary 5.90s process track_0 highlight /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/gaps.txt
+debuggroup summary 5.98s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 5.98s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 5.98s found conf file /usr/local/bin/../etc/tracks/scatter.conf
+debuggroup summary 5.98s processing track_0 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.ratio.circos
+debuggroup summary 6.26s processing track_1 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003R_AHHKYHDSXX_S13.ratio.circos
+debuggroup summary 6.53s processing track_2 scatter /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/circos/COLO829v003T_AHHKYHDSXX_S13.baf.circos
+debuggroup summary 10.06s drawing track_0 scatter z 0 COLO829v003T_AHHKYHDSXX_S13.ratio.circos orient out
+debuggroup summary 10.11s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 10.63s drawing track_1 scatter z 0 COLO829v003R_AHHKYHDSXX_S13.ratio.circos orient out
+debuggroup summary 10.69s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup summary 11.04s drawing track_2 scatter z 0 COLO829v003T_AHHKYHDSXX_S13.baf.circos orient out
+debuggroup summary 11.74s found conf file /usr/local/bin/../etc/tracks/axis.conf
+debuggroup output 16.99s generating output
+debuggroup output 17.42s created PNG image /home/rayanhassaine/work/54/6e77aa6f19a205d21998db5c69794e/purple/plot/COLO829v003T_AHHKYHDSXX_S13.input.png (534 kb)
