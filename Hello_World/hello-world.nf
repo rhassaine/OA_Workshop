@@ -17,7 +17,7 @@ nextflow.enable.dsl=2
 // Process definition
 
 process sayHello {
-    container 'ubuntu:latest' // remove that when running in ubuntu instance
+    // container 'ubuntu:latest' // remove that when running in ubuntu instance
     // publishDir "${params.outdir}/hello", mode: 'copy'
 
     // Input & Output Definitions
@@ -45,7 +45,7 @@ process sayHello {
 // Let's define a 2nd process that will convert a string to uppercase
 
 process toUpperCase {
-    container 'ubuntu:latest' // remove that when running in ubuntu instance
+    // container 'ubuntu:latest' // remove that when running in ubuntu instance
     // publishDir "${params.outdir}/uppercase", mode: 'copy'
 
     input:
