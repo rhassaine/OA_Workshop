@@ -1,7 +1,10 @@
 ### Oncoanalyser Workshop
 ### Bucharest, Romania - November 25/26 2024
+### Barcelona, Spain - October 27th 2025
 
-This repo was created to store all the necessary code for the Oncoanalyser Workshop given in Bucharest, Romania on November 25th & 26th 2024
+This repo was created to store all the necessary code for a nf-core/oncoanalyser workshop
+
+For the workshop given in Bucharest - these are the relevant contents for setting up 
 
 It contains 
 1) A startup script for setting up the machines with Java, Docker, Nextflow and Oncoanalyser (& additional scripts for re-running & de-installing should that be needed)
